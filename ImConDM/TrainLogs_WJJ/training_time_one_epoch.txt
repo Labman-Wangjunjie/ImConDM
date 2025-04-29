@@ -1,0 +1,12 @@
+
+PSM Training time: 607.70 seconds
+
+PSM Training time: 1218.82 seconds
+
+PSM Training time: 1827.29 seconds
+
+PSM Training time: 2431.61 seconds
+
+PSM Training time: 3037.05 seconds
+
+PSM Training time: 3644.62 seconds
