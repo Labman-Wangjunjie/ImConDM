@@ -1,6 +1,0 @@
-
-PSM Training time: 3644.62 seconds
-
- Scale: 4.0
-PSM Testing time: 3049.43 seconds
-时间步为:[100] F1:0.9792 pre: 0.9827 re: 0.9758
