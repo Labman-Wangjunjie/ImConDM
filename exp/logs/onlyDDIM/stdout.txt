@@ -1,0 +1,4 @@
+INFO - main.py - 2025-05-12 14:21:09,497 - Using device: cuda
+INFO - main.py - 2025-05-12 14:21:09,499 - Writing log file to exp\logs\./onlyDDIM
+INFO - main.py - 2025-05-12 14:21:09,500 - Exp instance id = 29584
+INFO - main.py - 2025-05-12 14:21:09,500 - Exp comment = 
