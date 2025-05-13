@@ -721,6 +721,9 @@ class Diffusion(object):
                 average_pre = sum(pre) / len(pre)
                 average_re = sum(re) / len(re)
                 return average_f1, average_pre, average_re
+            else:
+                for tt in range(len(ts_list)):
+                    self.sample_sequence(model, ts_list[tt], mind_list[tt])
 
         else:
             raise NotImplementedError("Sample procedeure not defined")
