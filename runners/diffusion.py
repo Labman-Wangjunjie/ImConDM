@@ -711,15 +711,16 @@ class Diffusion(object):
 
             mind_list = [[1]]
             # mind_list = [[1.0],[0.5,0.5],[0.25,0.25,0.25,0.25],[0.167,0.167,0.167,0.167,0.167,0.167],[0.125,0.125,0.125,0.125,0.125,0.125,0.125,0.125],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]]
-            for tt in range(len(ts_list)):
-                f1_, pre_, re_ = self.sample_sequence(model, ts_list[tt], mind_list[tt])
-                f1.append(f1_)
-                pre.append(pre_)
-                re.append(re_)
-            average_f1 = sum(f1) / len(f1)
-            average_pre = sum(pre) / len(pre)
-            average_re = sum(re) / len(re)
-            return average_f1, average_pre, average_re
+            if args.dataset == 'SMD' :
+                for tt in range(len(ts_list)):
+                    f1_, pre_, re_ = self.sample_sequence(model, ts_list[tt], mind_list[tt])
+                    f1.append(f1_)
+                    pre.append(pre_)
+                    re.append(re_)
+                average_f1 = sum(f1) / len(f1)
+                average_pre = sum(pre) / len(pre)
+                average_re = sum(re) / len(re)
+                return average_f1, average_pre, average_re
 
         else:
             raise NotImplementedError("Sample procedeure not defined")
