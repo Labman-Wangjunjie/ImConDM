@@ -608,7 +608,10 @@ class Diffusion(object):
 
                 earlyloss = f1
                 print('earlyloss={}'.format(earlyloss))
-                dataset_name = args.dataset + args.SMD_number
+                if args.dataset == 'SMD' :
+                    dataset_name = args.dataset + args.SMD_number
+                else:
+                    dataset_name = args.dataset
                 early_stopping(earlyloss, model, states, 'ddim', dataset_name)
 
                 # 记录训练时间
@@ -648,7 +651,10 @@ class Diffusion(object):
             if getattr(self.config.sampling, "ckpt_id", None) is None:
                 print("1")
                 print('hhhhhh')
-                dataset_name = args.dataset + args.SMD_number
+                if args.dataset == 'SMD' :
+                    dataset_name = args.dataset + args.SMD_number
+                else:
+                    dataset_name = args.dataset
                 states = torch.load(
                     f'./earlysave/TEST_{dataset_name}_DMnetwork.pth',
                     map_location=self.config.device,
