@@ -169,7 +169,7 @@ def metrics_calculate(values, re_values, labels,masks, mind, ts, th1, th2):
     with open(os.path.join(save_dir, 'training_time.txt'), 'a') as f:
         f.write(f"时间步为:{ts} F1:{f1_:.4f} pre: {pre_:.4f} re: {re_:.4f}\n")
 
-    return f1_
+    return f1_, pre_, re_
 
 
 # def evaluate(labels, scores, step=1000, adj=True):

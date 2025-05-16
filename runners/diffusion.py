@@ -975,7 +975,8 @@ class Diffusion(object):
                 f.write(f"{args.dataset} Testing time: {duration:.2f} seconds\n")
 
 
-            metrics_calculate(real_data, re_datas, label,masks, mind, ts, self.th1, self.th2)
+            f1_, pre_, re_ = metrics_calculate(real_data, re_datas, label, masks, mind, ts)
+            return f1_, pre_, re_
 
         '''x = torch.randn(
             2,
