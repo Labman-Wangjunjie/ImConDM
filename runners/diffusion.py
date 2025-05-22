@@ -659,7 +659,11 @@ class Diffusion(object):
                 #     dataset_name = args.dataset + args.SMD_number
                 # else:
                 #     dataset_name = args.dataset
-                dataset_name = args.dataset
+                # dataset_name = args.dataset
+                if args.dataset == 'SMD' :
+                    dataset_name = args.dataset + '1-1'
+                else:
+                    dataset_name = args.dataset
                 states = torch.load(
                     f'./earlysave/TEST_{dataset_name}_DMnetwork.pth',
                     map_location=self.config.device,
