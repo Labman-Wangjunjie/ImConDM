@@ -365,17 +365,17 @@ def main():
             runner.sample()
         elif args.test:
             runner.test()
-        elif args.dataset == 'SMD':
-            for number in SMD_data_set_number:
-                args.SMD_number = number
-                f1_, pre_, re_ = runner.complete()
-                f1.append(f1_)
-                pre.append(pre_)
-                re.append(re_)
-            average_f1 = sum(f1) / len(f1)
-            average_pre = sum(pre) / len(pre)
-            average_re = sum(re) / len(re)
-            print(f"f1 分数：{average_f1:.4f},pre 分数：{average_pre:.4f},re 分数：{average_re:.4f}")
+        # elif args.dataset == 'SMD':
+        #     for number in SMD_data_set_number:
+        #         args.SMD_number = number
+        #         f1_, pre_, re_ = runner.complete()
+        #         f1.append(f1_)
+        #         pre.append(pre_)
+        #         re.append(re_)
+        #     average_f1 = sum(f1) / len(f1)
+        #     average_pre = sum(pre) / len(pre)
+        #     average_re = sum(re) / len(re)
+        #     print(f"f1 分数：{average_f1:.4f},pre 分数：{average_pre:.4f},re 分数：{average_re:.4f}")
         else:
             print("1111111")
             runner.complete()

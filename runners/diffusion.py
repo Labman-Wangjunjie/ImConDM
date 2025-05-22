@@ -344,8 +344,9 @@ class Diffusion(object):
         elif (args.dataset == 'SMD'):
 
             print('Load SMD')
-            SMD_number = args.SMD_number
-            dataset = np.loadtxt(f'./data/SMD/train/machine-{SMD_number}.txt', delimiter=',')
+            # SMD_number = args.SMD_number
+            # dataset = np.loadtxt(f'./data/SMD/train/machine-{SMD_number}.txt', delimiter=',')
+            dataset = np.loadtxt('./data/SMD/train/machine-1-1.txt', delimiter=',')
             length = int(dataset.shape[0] * 0.80)
             testdata = dataset[length:]
             traindata = dataset[:length]
@@ -366,7 +367,9 @@ class Diffusion(object):
 
         if args.dataset == "SMD":
             feature_dim = 38
-            self.th1, self.th2 = self.get_th_values_for_SMD(args.SMD_number)
+            # self.th1, self.th2 = self.get_th_values_for_SMD(args.SMD_number)
+            self.th1 = 8.503830909729004
+            self.th2 = 44.26939010620117
         elif args.dataset == "SMAP":
             feature_dim = 25
             self.th1 = 0.02140190452337265
@@ -608,10 +611,11 @@ class Diffusion(object):
 
                 earlyloss = f1
                 print('earlyloss={}'.format(earlyloss))
-                if args.dataset == 'SMD' :
-                    dataset_name = args.dataset + args.SMD_number
-                else:
-                    dataset_name = args.dataset
+                # if args.dataset == 'SMD' :
+                #     dataset_name = args.dataset + args.SMD_number
+                # else:
+                #     dataset_name = args.dataset
+                dataset_name = args.dataset
                 early_stopping(earlyloss, model, states, 'ddim', dataset_name)
 
                 # 记录训练时间
@@ -651,10 +655,11 @@ class Diffusion(object):
             if getattr(self.config.sampling, "ckpt_id", None) is None:
                 print("1")
                 print('hhhhhh')
-                if args.dataset == 'SMD' :
-                    dataset_name = args.dataset + args.SMD_number
-                else:
-                    dataset_name = args.dataset
+                # if args.dataset == 'SMD' :
+                #     dataset_name = args.dataset + args.SMD_number
+                # else:
+                #     dataset_name = args.dataset
+                dataset_name = args.dataset
                 states = torch.load(
                     f'./earlysave/TEST_{dataset_name}_DMnetwork.pth',
                     map_location=self.config.device,
@@ -711,19 +716,19 @@ class Diffusion(object):
 
             mind_list = [[1]]
             # mind_list = [[1.0],[0.5,0.5],[0.25,0.25,0.25,0.25],[0.167,0.167,0.167,0.167,0.167,0.167],[0.125,0.125,0.125,0.125,0.125,0.125,0.125,0.125],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]]
-            if args.dataset == 'SMD' :
-                for tt in range(len(ts_list)):
-                    f1_, pre_, re_ = self.sample_sequence(model, ts_list[tt], mind_list[tt])
-                    f1.append(f1_)
-                    pre.append(pre_)
-                    re.append(re_)
-                average_f1 = sum(f1) / len(f1)
-                average_pre = sum(pre) / len(pre)
-                average_re = sum(re) / len(re)
-                return average_f1, average_pre, average_re
-            else:
-                for tt in range(len(ts_list)):
-                    self.sample_sequence(model, ts_list[tt], mind_list[tt])
+            # if args.dataset == 'SMD' :
+            #     for tt in range(len(ts_list)):
+            #         f1_, pre_, re_ = self.sample_sequence(model, ts_list[tt], mind_list[tt])
+            #         f1.append(f1_)
+            #         pre.append(pre_)
+            #         re.append(re_)
+            #     average_f1 = sum(f1) / len(f1)
+            #     average_pre = sum(pre) / len(pre)
+            #     average_re = sum(re) / len(re)
+            #     return average_f1, average_pre, average_re
+            # else:
+            for tt in range(len(ts_list)):
+                self.sample_sequence(model, ts_list[tt], mind_list[tt])
 
         else:
             raise NotImplementedError("Sample procedeure not defined")
@@ -833,13 +838,19 @@ class Diffusion(object):
 
 
 
+            # elif (args.dataset == 'SMD' ):
+
+            #     SMD_number = args.SMD_number
+
+            #     testdata = np.loadtxt(f'./data/SMD/test/machine-{SMD_number}.txt', delimiter=',')
+
+            #     label = np.loadtxt(f'./data/SMD/test_label/machine-{SMD_number}.txt', delimiter=',')
+
             elif (args.dataset == 'SMD'):
 
-                SMD_number = args.SMD_number
+                 testdata = np.loadtxt('./data/SMD/test/machine-1-1.txt', delimiter=',')
 
-                testdata = np.loadtxt(f'./data/SMD/test/machine-{SMD_number}.txt', delimiter=',')
-
-                label = np.loadtxt(f'./data/SMD/test_label/machine-{SMD_number}.txt', delimiter=',')
+                 label = np.loadtxt('./data/SMD/test_label/machine-1-1.txt', delimiter=',')
 
 
             elif (args.dataset == 'WADI'):
