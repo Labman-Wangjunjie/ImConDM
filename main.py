@@ -107,119 +107,18 @@ def parse_args_and_config():
         help="Disable sequence mode",
     )
     parser.set_defaults(sequence=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # basic config
-    parser.add_argument('--ii', type=int, default=0)
-    parser.add_argument('--use_window_normalization', type=bool, default=True)
-
-    parser.add_argument('--stage_mode', type=str, default="TWO", help="ONE, TWO")
-    parser.add_argument('--is_training', type=int, default=1, help='status')
-    parser.add_argument('--out_figures', type=int, default=1)
-    parser.add_argument('--vis_ar_part', type=int, default=0, help='status')
-    parser.add_argument('--vis_MTS_analysis', type=int, default=1, help='status')
-
-    parser.add_argument('--model', type=str, default='DDPM',
-                        help='model name, options: [DDPM]')
-
-    parser.add_argument('--train_epochs', type=int, default=100, help='train epochs')
-    parser.add_argument('--pretrain_epochs', type=int, default=5, help='train epochs')
-
-    parser.add_argument('--sample_times', type=int, default=1)
-    parser.add_argument('--beta_dist_alpha', type=float, default=-1)  # -1
-    parser.add_argument('--our_ddpm_clip', type=float, default=100)  # 100
-
-    # data loader
-    parser.add_argument('--seq_len', type=int, default=192, help='input sequence length')
-    parser.add_argument('--label_len', type=int, default=7, help='start token length')
-    parser.add_argument('--pred_len', type=int, default=14, help='prediction sequence length')
-
-    parser.add_argument('--dataset_name', type=str, default='Exchange')
-    parser.add_argument('--weather_type', type=str, default='mintemp', help="['rain' 'mintemp' 'maxtemp' 'solar']")
-
+    
     parser.add_argument('--features', type=str, default='M',
                         help='forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate')
-    parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
-    parser.add_argument('--num_vars', type=int, default=8, help='encoder input size')
-
-    parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
-    parser.add_argument('--freq', type=str, default='h',
-                        help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-
-    # Diffusion Models
-    parser.add_argument('--interval', type=int, default=1000, help='number of diffusion steps')
-    parser.add_argument('--ot-ode', default=True, help='use OT-ODE model')
-    parser.add_argument("--beta-max", type=float, default=0.3, help="max diffusion for the diffusion model")
-    parser.add_argument("--t0", type=float, default=1e-4, help="sigma start time in network parametrization")
-    parser.add_argument("--T", type=float, default=1., help="sigma end time in network parametrization")
-    parser.add_argument('--model_channels', type=int, default=256)  # 256
-    parser.add_argument('--nfe', type=int, default=100)
-    parser.add_argument('--dim_LSTM', type=int, default=64)
-
-    parser.add_argument('--diff_steps', type=int, default=1000, help='number of diffusion steps')
-    parser.add_argument('--UNet_Type', type=str, default='CNN', help=['CNN'])
-    parser.add_argument('--D3PM_kernel_size', type=int, default=5)
-    parser.add_argument('--use_freq_enhance', type=int, default=0)
-    parser.add_argument('--type_sampler', type=str, default='none', help=["none", "dpm"])
-    parser.add_argument('--parameterization', type=str, default='x_start', help=["noise", "x_start"])
-
-    parser.add_argument('--ddpm_inp_embed', type=int, default=256)  # 256
-    parser.add_argument('--ddpm_dim_diff_steps', type=int, default=256)  # 256
-    parser.add_argument('--ddpm_channels_conv', type=int, default=256)  # 256
-    parser.add_argument('--ddpm_channels_fusion_I', type=int, default=256)  # 256
     parser.add_argument('--ddpm_layers_inp', type=int, default=5)
+    parser.add_argument('--ddpm_channels_conv', type=int, default=256)  # 256
     parser.add_argument('--ddpm_layers_I', type=int, default=5)
-    parser.add_argument('--ddpm_layers_II', type=int, default=5)
+    parser.add_argument('--ablation_study_F_type', type=str, default="CNN", help="Linear, CNN")
     parser.add_argument('--cond_ddpm_num_layers', type=int, default=5)
     parser.add_argument('--cond_ddpm_channels_conv', type=int, default=64)
-
     parser.add_argument('--ablation_study_case', type=str, default="none",
-                        help="none, mix_1, ar_1, mix_ar_0, w_pred_loss")
-    parser.add_argument('--weight_pred_loss', type=float, default=0.0)
-    parser.add_argument('--ablation_study_F_type', type=str, default="CNN", help="Linear, CNN")
-    parser.add_argument('--ablation_study_masking_type', type=str, default="none", help="none, hard, segment")
-    parser.add_argument('--ablation_study_masking_tau', type=float, default=0.9)
-
-    # forecasting task
-
-    parser.add_argument('--learning_rate', type=float, default=0.0006, help='optimizer learning rate')
-
-    parser.add_argument('--embed', type=str, default='timeF',
-                        help='time features encoding, options:[timeF, fixed, learned]')
-
-    # GPU
-    parser.add_argument('--use_gpu', type=bool, default=True, help='use gpu')
-    parser.add_argument('--gpu', type=int, default=0, help='gpu')
-    parser.add_argument('--use_multi_gpu', action='store_true', help='use multiple gpus', default=False)
-    parser.add_argument('--devices', type=str, default='0', help='device ids of multile gpus')
-
-    parser.add_argument('--num_workers', type=int, default=8, help='data loader num workers')
-    parser.add_argument('--itr', type=int, default=10, help='experiments times')
-    parser.add_argument('--batch_size', type=int, default=64, help='32 batch size of train input data')  # 32
-    parser.add_argument('--test_batch_size', type=int, default=64, help='32 batch size of train input data')  # 32
-
-    # parser.add_argument('--lradj', type=str, default='type2', help='adjust learning rate')
-    parser.add_argument('--use_amp', action='store_true', help='use automatic mixed precision training', default=False)
-
-    parser.add_argument('--tag', type=str, default='')
-
-
-
-
-
-
+                                            help="none, mix_1, ar_1, mix_ar_0, w_pred_loss")
+    parser.add_argument('--ddpm_layers_II', type=int, default=5)
 
 
 
